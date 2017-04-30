@@ -1,0 +1,108 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+
+<!-- Import dependencies -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../jviz/jviz.html">
+<link rel="import" href="../jviz-styles/jviz-styles.html">
+<link rel="import" href="../jviz-icons/jviz-icons.html">
+
+<!-- Input element -->
+<dom-module id="jviz-input">
+  <template>
+    <style>
+      :host
+      {
+        --jviz-input--color-background: var(--jviz-grey);
+        --jviz-input--color-text: var(--jviz-grey-over);
+        --jviz-input--width: 100px;
+        --jviz-input--margin: 8px;
+      }
+      :host
+      {
+        display: inline-block;
+        width: var(--jviz-input--width);
+        border-radius: 5px;
+        height: 30px;
+        line-height: 30px;
+        background-color: var(--jviz-input--color-background);
+      }
+      :host .icon
+      {
+        padding: 2px;
+        float: left;
+      }
+      :host .input
+      {
+        width: calc(var(--jviz-input--width) - 2*var(--jviz-input--margin));
+        background-color: transparent;
+        font-family: var(--jviz-font-family);
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--jviz-input--color-text);
+        height: 26px;
+        margin-left: var(--jviz-input--margin);
+        margin-right: var(--jviz-input--margin);
+        margin-top: 2px;
+        margin-bottom: 2px;
+        line-height: 26px;
+        border: 0px !important;
+        outline: 0px;
+        float: right;
+      }
+      :host[icon] .input
+      {
+        width: calc(var(--jviz-input--width) - var(--jviz-input--margin) - 30px) !important;
+        margin-left: 0px !important;
+      }
+    </style>
+    <template is="dom-if" if="{{ icon }}">
+      <jviz-icons class="icon" icon$="{{ icon }}" color$="{{ color }}" size="26px" reflect></jviz-icons>
+    </template>
+    <input id="input" class="input" type$="{{ type }}" disabled$="{{ disabled }}" placeholder$="{{ placeholder }}">
+  </template>
+</dom-module>
+
+<!-- Input element logic -->
+<script>
+  //Initialize the input object
+  var jviz_input = { is: 'jviz-input' };
+
+  //Input properties
+  jviz_input.properties = {};
+  jviz_input.properties.icon = { type: String, reflectToAttribute: true };
+  jviz_input.properties.color = { type: String, reflectToAttribute: true, value: 'grey', observer: '_update_color' };
+  jviz_input.properties.type = { type: String, reflectToAttribute: true, value: 'text' };
+  jviz_input.properties.disabled = { type: Boolean, reflectToAttribute: true, value: false };
+  jviz_input.properties.placeholder = { type: String, reflectToAttribute: true };
+  jviz_input.properties.width = { type: String, reflectToAttribute: true, value: '100px', observer: '_update_width' };
+
+  //Update the input width
+  jviz_input._update_width = function(value)
+  {
+    //Update the input width variable
+    this.customStyle['--jviz-input--width'] = value;
+
+    //Update the styles
+    this.updateStyles();
+  };
+
+  //Update the input color
+  jviz_input._update_color = function(value)
+  {
+    //Update the input background color
+    this.customStyle['--jviz-input--color-background'] = 'var(--jviz-' + value + ')';
+
+    //Update the input text color
+    this.customStyle['--jviz-input--color-text'] = 'var(--jviz-' + value + '-over)';
+
+    //Update the styles
+    this.updateStyles();
+  };
+
+  //Register the input element
+  Polymer(jviz_input);
+</script>
