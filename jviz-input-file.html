@@ -83,8 +83,13 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
       //Save the file value
       self.value = self.$.input.value;
 
-      //Add the file path value
-      self.$.file.innerHTML = self.value;
+      //Check the value
+      if(self.value)
+      {
+        //Add the file path value
+        self.$.file.innerHTML = self._filename(self.value);
+
+      }
     });
 
     //Set the default file value
@@ -122,6 +127,26 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 
     //Open the file selector dialog
     this.$.input.click();
+  };
+
+  //Get the filename
+  jviz_input_file._filename = function(full_path)
+  {
+    //Get the start index
+    var start_index = (full_path.indexOf('\\') >= 0 ? full_path.lastIndexOf('\\') : full_path.lastIndexOf('/'));
+
+    //Get the filename
+    var filename = full_path.substring(start_index);
+
+    //Check the first \ or /
+    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0)
+    {
+      //Cut the filename
+      filename = filename.substring(1);
+    }
+
+    //Return the filename
+    return filename;
   };
 
   //Register the file input element
