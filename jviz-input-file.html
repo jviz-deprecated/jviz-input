@@ -47,9 +47,14 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
         text-align: left;
         float: right;
       }
+      :host .input
+      {
+        display: none !important;
+      }
     </style>
     <jviz-btn class="button" on-tap="_select_file" color$="{{ color }}" disabled$="{{ disabled }}" text="Select file"></jviz-btn>
     <div id="file" class="file"></div>
+    <input id="input" class="input" type="file" accept$="{{ accept }}">
   </template>
 </dom-module>
 
@@ -64,6 +69,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   jviz_input_file.properties.color = { type: String, reflectToAttribute: true, value: 'grey', observer: '_update_color' };
   jviz_input_file.properties.width = { type: String, reflectToAttribute: true, value: '200px', observer: '_update_width' };
   jviz_input_file.properties.disabled = { type: Boolean, reflectToAttribute: true, value: false };
+  jviz_input_file.properties.accept = { type: String, reflectToAttribute: true };
 
   //Attached method
   jviz_input_file.attached = function()
