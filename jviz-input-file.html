@@ -74,6 +74,19 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   //Attached method
   jviz_input_file.attached = function()
   {
+    //Save this
+    var self = this;
+
+    //Add the change event
+    this.$.input.addEventListener('change', function()
+    {
+      //Save the file value
+      self.value = self.$.input.value;
+
+      //Add the file path value
+      self.$.file.innerHTML = self.value;
+    });
+
     //Set the default file value
     this.$.file.innerHTML = (this.value) ? this.value : 'No file selected...';
   };
@@ -106,6 +119,9 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   {
     //Check if is disabled
     if(this.disabled === true){ return; }
+
+    //Open the file selector dialog
+    this.$.input.click();
   };
 
   //Register the file input element
