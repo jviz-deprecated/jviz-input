@@ -1,0 +1,107 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+
+<!-- Import dependencies -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../jviz/jviz.html">
+<link rel="import" href="../jviz-styles/jviz-styles.html">
+<link rel="import" href="../jviz-btn/jviz-btn.html">
+
+<!-- File input element -->
+<dom-module id="jviz-input-file">
+  <template>
+    <style>
+      :host
+      {
+        --jviz-input-file--color: var(--jviz-navy);
+        --jviz-input-file--width: 200px;
+        --jviz-input-file--height: 30px;
+        --jviz-input-file--padding: 5px;
+      }
+      :host
+      {
+        display: inline-block;
+        width: var(--jviz-input-file--width);
+        height: 30px;
+      }
+      :host .button
+      {
+        float: left;
+      }
+      :host .file
+      {
+        display: inline-block;
+        width: calc(var(--jviz-input-file--width) - 100px - 2*var(--jviz-input-file--padding));
+        height: calc(var(--jviz-input-file--height) - 2*var(--jviz-input-file--padding));
+        line-height: calc(var(--jviz-input-file--height) - 2*var(--jviz-input-file--padding));
+        font-family: var(--jviz-font-family);
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--jviz-input-file--color);
+        padding: var(--jviz-input-file--padding);
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+        float: right;
+      }
+    </style>
+    <jviz-btn class="button" on-tap="_select_file" color$="{{ color }}" disabled$="{{ disabled }}" text="Select file"></jviz-btn>
+    <div id="file" class="file"></div>
+  </template>
+</dom-module>
+
+<!-- File input logic -->
+<script>
+  //Initialize the file input object
+  var jviz_input_file = { is: 'jviz-input-file' };
+
+  //Initialize the properties
+  jviz_input_file.properties = {};
+  jviz_input_file.properties.value = { type: String, reflectToAttribute: false };
+  jviz_input_file.properties.color = { type: String, reflectToAttribute: true, value: 'grey', observer: '_update_color' };
+  jviz_input_file.properties.width = { type: String, reflectToAttribute: true, value: '200px', observer: '_update_width' };
+  jviz_input_file.properties.disabled = { type: Boolean, reflectToAttribute: true, value: false };
+
+  //Attached method
+  jviz_input_file.attached = function()
+  {
+    //Set the default file value
+    this.$.file.innerHTML = (this.value) ? this.value : 'No file selected...';
+  };
+
+  //Update the input width
+  jviz_input_file._update_width = function(value)
+  {
+    //Update the input width variable
+    this.customStyle['--jviz-input-file--width'] = value;
+
+    //Update the styles
+    this.updateStyles();
+  };
+
+  //Update the input color
+  jviz_input_file._update_color = function(value)
+  {
+    //Update the input background color
+    //this.customStyle['--jviz-input-file--color-background'] = 'var(--jviz-' + value + ')';
+
+    //Update the input text color
+    //this.customStyle['--jviz-input-file--color-text'] = 'var(--jviz-' + value + '-over)';
+
+    //Update the styles
+    //this.updateStyles();
+  };
+
+  //Select a file
+  jviz_input_file._select_file = function()
+  {
+    //Check if is disabled
+    if(this.disabled === true){ return; }
+  };
+
+  //Register the file input element
+  Polymer(jviz_input_file);
+</script>
