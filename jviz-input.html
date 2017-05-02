@@ -98,6 +98,8 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     this.$.input.addEventListener('change', function()
     {
       //Emit the change event
+      //Emit the change event as change:value because there is a bug on the change event
+      //https://github.com/Polymer/polymer/issues/687
       self.fire('change:value', { value: self.value });
     });
   };
