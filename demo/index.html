@@ -16,8 +16,21 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 <!-- Test input element -->
 <jviz-input id="test1" width="200px" icon="search"></jviz-input>
 
-<!-- Spaces -->
-<br><br>
+<!-- Input logic -->
+<script>
+  var el = null;
 
-<!-- Test input file element -->
-<jviz-input-file id="test2"></jviz-input-file>
+  //Dom ready event
+  jviz.dom.ready(function()
+  {
+    //Initialize the element
+    el = jviz.dom.id('test1');
+
+    //Add the change event listener
+    el.addEventListener('change:value', function()
+    {
+      //Display in console
+      console.log('Input changed to: ' + el.value);
+    })
+  });
+</script>
