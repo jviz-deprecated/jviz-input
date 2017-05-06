@@ -62,7 +62,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     <template is="dom-if" if="{{ icon }}">
       <jviz-icons class="icon" icon$="{{ icon }}" color$="{{ color }}" size="26px" reflect></jviz-icons>
     </template>
-    <input id="input" class="input" type$="{{ type }}" disabled$="{{ disabled }}" placeholder$="{{ placeholder }}">
+    <input id="input" class="input" type$="{{ type }}" disabled$="{{ disabled }}" placeholder$="{{ placeholder }}" required="{{ required }}">
   </template>
 </dom-module>
 
@@ -81,6 +81,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   jviz_input.properties.width = { type: String, reflectToAttribute: true, value: '100px', observer: '_update_width' };
   jviz_input.properties.value = { type: String, reflectToAttribute: false, value: '', observer: '_update_value' };
   jviz_input.properties._value_change = { type: Boolean, value: true };
+  jviz_input.properties.required = { type: Booleam, value: false, reflectToAttribute: true };
 
   //Attached method
   jviz_input.attached = function()
@@ -116,7 +117,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   {
     //Check if the value can change
     if(this._value_change === false){ return; }
-    
+
     //Update the input value
     this.$.input.value = value;
   };
