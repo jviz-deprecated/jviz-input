@@ -62,7 +62,12 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     <template is="dom-if" if="{{ icon }}">
       <jviz-icons class="icon" icon$="{{ icon }}" color$="{{ color }}" size="26px" reflect></jviz-icons>
     </template>
-    <input id="input" class="input" type$="{{ type }}" disabled$="{{ disabled }}" placeholder$="{{ placeholder }}" required="{{ required }}">
+    <input id="input"
+           class="input"
+           type$="{{ type }}"
+           disabled$="{{ disabled }}"
+           placeholder$="{{ placeholder }}"
+           required$="{{ required }}">
   </template>
 </dom-module>
 
