@@ -62,12 +62,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     <template is="dom-if" if="{{ icon }}">
       <jviz-icons class="icon" icon$="{{ icon }}" color$="{{ color }}" size="26px" reflect></jviz-icons>
     </template>
-    <input id="input"
-           class="input"
-           type$="{{ type }}"
-           value$="{{ value }}"
-           disabled$="{{ disabled }}"
-           placeholder$="{{ placeholder }}">
+    <input id="input" class="input" type$="{{ type }}" disabled$="{{ disabled }}" placeholder$="{{ placeholder }}">
   </template>
 </dom-module>
 
@@ -84,7 +79,8 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   jviz_input.properties.disabled = { type: Boolean, reflectToAttribute: true, value: false };
   jviz_input.properties.placeholder = { type: String, reflectToAttribute: true };
   jviz_input.properties.width = { type: String, reflectToAttribute: true, value: '100px', observer: '_update_width' };
-  jviz_input.properties.value = { type: String, reflectToAttribute: false, value: '' };
+  jviz_input.properties.value = { type: String, reflectToAttribute: false, value: '', observer: '_update_value' };
+  jviz_input.properties._value_change = { type: Boolean, value: true };
 
   //Attached method
   jviz_input.attached = function()
@@ -95,6 +91,9 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     //Add the input change event listener
     this.$.input.addEventListener('input', function()
     {
+      //Disable the value change
+      self._value_change = false;
+
       //Save the actual input value
       self.value = self.$.input.value;
     });
@@ -102,11 +101,24 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     //Add the input onchange event listener
     this.$.input.addEventListener('change', function()
     {
+      //Value can change
+      self._value_change = true;
+
       //Emit the change event
       //Emit the change event as change:value because there is a bug on the change event
       //https://github.com/Polymer/polymer/issues/687
       self.fire('change:value', { value: self.value });
     });
+  };
+
+  //Update the value
+  jviz_input._update_value = function(value)
+  {
+    //Check if the value can change
+    if(this._value_change === false){ return; }
+    
+    //Update the input value
+    this.$.input.value = value;
   };
 
   //Update the input width
