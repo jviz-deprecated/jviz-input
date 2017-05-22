@@ -68,6 +68,8 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
            name$="{{ name }}"
            disabled$="{{ disabled }}"
            placeholder$="{{ placeholder }}"
+           min$="{{ min }}"
+           max$="{{ max }}"
            required$="{{ required }}">
   </template>
 </dom-module>
@@ -89,6 +91,8 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   jviz_input.properties._value_change = { type: Boolean, value: true };
   jviz_input.properties.required = { type: Boolean, value: false, reflectToAttribute: true };
   jviz_input.properties.name = { type: String, reflectToAttribute: true };
+  jviz_input.properties.min = { type: Number, reflectToAttribute: true };
+  jviz_input.properties.max = { type: Number, reflectToAttribute: true };
 
   //Attached method
   jviz_input.attached = function()
